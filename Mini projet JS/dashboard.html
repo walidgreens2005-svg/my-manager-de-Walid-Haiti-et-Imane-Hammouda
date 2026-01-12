@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyManager - Tableau de Bord</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <!-- Loading -->
+    <div id="globalLoading" class="global-loading">
+        <div class="loading-content">
+            <div class="loading-spinner-large"></div>
+            <p>Chargement du tableau de bord...</p>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <img src="assets/logo.png" alt="MyManager Logo" class="sidebar-logo">
+            <h2>DashFlow</h2>
+        </div>
+
+        <ul class="sidebar-menu">
+            <li class="active">
+                <a href="dashboard.html">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="entities.html?entity=users">
+                    <i class="fas fa-users"></i>
+                    <span>Utilisateurs</span>
+                </a>
+            </li>
+            <li>
+                <a href="entities.html?entity=products">
+                    <i class="fas fa-box"></i>
+                    <span>Produits</span>
+                </a>
+            </li>
+            <li>
+                <a href="entities.html?entity=orders">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Commandes</span>
+                </a>
+            </li>
+            <li>
+                <a href="entities.html?entity=customers">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Clients</span>
+                </a>
+            </li>
+            <li>
+                <a href="entities.html?entity=invoices">
+                    <i class="fas fa-file-invoice"></i>
+                    <span>Factures</span>
+                </a>
+            </li>
+            <li class="sidebar-footer">
+                <a href="#" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Déconnexion</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Navbar -->
+        <header class="top-navbar">
+            <div class="navbar-left">
+                <button class="sidebar-toggle" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1>Tableau de Bord</h1>
+            </div>
+
+            <div class="navbar-right">
+                <div class="language-selector">
+                    <select id="languageSelect">
+                        <option value="fr">🇫🇷 Français</option>
+                        <option value="en">🇬🇧 English</option>
+                        <option value="ar">🇸🇦 العربية</option>
+                    </select>
+                </div>
+
+                <div class="user-profile">
+                    <span id="usernameDisplay">Administrateur</span>
+                    <div class="avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-container">
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card" onclick="navigateTo('users')">
+                    <div class="stat-icon" style="background: #4CAF50;">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalUsers">0</h3>
+                        <p>Utilisateurs Totaux</p>
+                    </div>
+                </div>
+
+                <div class="stat-card" onclick="navigateTo('products')">
+                    <div class="stat-icon" style="background: #2196F3;">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalProducts">0</h3>
+                        <p>Produits</p>
+                    </div>
+                </div>
+
+                <div class="stat-card" onclick="navigateTo('orders')">
+                    <div class="stat-icon" style="background: #FF9800;">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalOrders">0</h3>
+                        <p>Commandes</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #9C27B0;">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalRevenue">$0</h3>
+                        <p>Revenu Total</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <h3><i class="fas fa-chart-pie"></i> Distribution des Utilisateurs</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="userDistributionChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h3><i class="fas fa-chart-line"></i> Commandes par Mois</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="ordersChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h3><i class="fas fa-chart-pie"></i> Statut des Commandes</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="ordersStatusChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h3><i class="fas fa-chart-bar"></i> Revenu Mensuel</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h3><i class="fas fa-trophy"></i> Top Produits</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="topProductsChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h3><i class="fas fa-globe"></i> Clients par Région</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="customersByRegionChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="recent-activity">
+                <h3><i class="fas fa-history"></i> Activité Récente</h3>
+                <div class="activity-list" id="activityList">
+                    <!-- Les activités seront chargées dynamiquement -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+
+    <script>
+        // Initialisation immédiate
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('Dashboard page loaded');
+
+            // Vérifier l'authentification
+            if (localStorage.getItem('isLoggedIn') !== 'true') {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Initialiser le dashboard après un court délai
+            setTimeout(function () {
+                if (typeof initDashboard === 'function') {
+                    initDashboard();
+                } else {
+                    console.error('Dashboard functions not loaded');
+                    // Fallback: afficher les données de base
+                    document.getElementById('totalUsers').textContent = '-';
+                    document.getElementById('totalProducts').textContent = '-';
+                    document.getElementById('totalOrders').textContent = '-';
+                    document.getElementById('totalRevenue').textContent = '-';
+                    document.getElementById('globalLoading').style.display = 'none';
+                }
+            }, 500);
+        });
+
+        // Fonction de navigation pour les cartes cliquables
+        function navigateTo(entity) {
+            console.log('Navigation vers:', entity);
+
+            // Animation de clic
+            event.currentTarget.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                event.currentTarget.style.transform = 'scale(1)';
+            }, 150);
+
+            // Redirection vers la page entities.html avec le paramètre d'entité
+            window.location.href = `entities.html?entity=${entity}`;
+        }
+
+        // Ajouter des styles pour les cartes cliquables
+        document.addEventListener('DOMContentLoaded', function () {
+            const style = document.createElement('style');
+            style.textContent = `
+                .stat-card[onclick] {
+                    cursor: pointer;
+                    transition: transform 0.2s, box-shadow 0.2s;
+                }
+                .stat-card[onclick]:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+
+</body>
+
+</html>

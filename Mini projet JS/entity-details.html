@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MyManager - Détails</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/entities.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <img src="assets/logo.png" alt="Logo" class="sidebar-logo">
+            <h2>DashFlow</h2>
+        </div>
+
+        <ul class="sidebar-menu">
+            <li>
+                <a href="dashboard.html">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="entities.html?entity=users">
+                    <i class="fas fa-users"></i>
+                    <span>Utilisateurs</span>
+                </a>
+            </li>
+            <li>
+                <a href="entities.html?entity=products">
+                    <i class="fas fa-box"></i>
+                    <span>Produits</span>
+                </a>
+            </li>
+            <li>
+                <a href="entities.html?entity=orders">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Commandes</span>
+                </a>
+            </li>
+            <li>
+                <a href="entities.html?entity=customers">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Clients</span>
+                </a>
+            </li>
+            <li>
+                <a href="entities.html?entity=invoices">
+                    <i class="fas fa-file-invoice"></i>
+                    <span>Factures</span>
+                </a>
+            </li>
+            <li class="sidebar-footer">
+                <a href="#" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Déconnexion</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Navigation Bar -->
+        <header class="top-navbar">
+            <div class="navbar-left">
+                <button class="sidebar-toggle" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <button class="btn-back" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </button>
+                <h1 id="detailsTitle">Détails</h1>
+            </div>
+
+            <div class="navbar-right">
+                <div class="language-selector">
+                    <select id="languageSelect" onchange="changeLanguage(this.value)">
+                        <option value="fr">🇫🇷 Français</option>
+                        <option value="en">🇬🇧 English</option>
+                        <option value="ar">🇸🇦 العربية</option>
+                    </select>
+                </div>
+
+                <div class="user-profile">
+                    <span id="usernameDisplay">Administrateur</span>
+                    <div class="avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Details Content -->
+        <div class="details-container">
+            <div class="details-header">
+                <h2 id="itemTitle">Détails de l'élément</h2>
+                <div class="header-actions">
+                    <button class="btn btn-primary" onclick="exportToPDF()">
+                        <i class="fas fa-file-pdf"></i> Exporter PDF
+                    </button>
+                    <button class="btn btn-secondary" onclick="printDetails()">
+                        <i class="fas fa-print"></i> Imprimer
+                    </button>
+                </div>
+            </div>
+
+            <div class="details-content" id="detailsContent">
+                <!-- Les détails seront chargés dynamiquement -->
+            </div>
+        </div>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/crud.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/details.js"></script>
+    <script src="js/export.js"></script>
+</body>
+
+</html>

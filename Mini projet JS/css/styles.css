@@ -1,0 +1,658 @@
+:root {
+    --primary-color: #adc032;
+    --secondary-color: #d1b424;
+    --sidebar-width: 250px;
+    --navbar-height: 70px;
+    --transition-speed: 0.3s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Outfit', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f7fa;
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: var(--sidebar-width);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    transition: transform var(--transition-speed);
+    z-index: 1000;
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-header {
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+.sidebar-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+    font-family: 'Outfit', sans-serif;
+    /* Professional Font */
+    letter-spacing: 0.5px;
+    color: white;
+    margin: 0;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 20px 0;
+}
+
+.sidebar-menu li {
+    margin: 5px 0;
+}
+
+.sidebar-menu a {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.sidebar-menu a:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    padding-left: 25px;
+}
+
+.sidebar-menu a.active {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border-left: 4px solid white;
+}
+
+.sidebar-menu i {
+    width: 30px;
+    font-size: 18px;
+}
+
+.sidebar-menu span {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.sidebar-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    transition: margin-left var(--transition-speed);
+}
+
+/* Top Navigation Bar */
+.top-navbar {
+    height: var(--navbar-height);
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.sidebar-toggle {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: var(--primary-color);
+    cursor: pointer;
+    display: none;
+}
+
+.navbar-left h1 {
+    font-size: 22px;
+    color: #333;
+    font-weight: 600;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.language-selector select {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    background: white;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.user-profile span {
+    font-weight: 500;
+    color: #333;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .sidebar-toggle {
+        display: block;
+    }
+
+    .top-navbar {
+        padding: 0 15px;
+    }
+}
+
+/* Styles pour l'internationalisation */
+
+/* Direction RTL */
+body.rtl {
+    direction: rtl;
+    text-align: right;
+}
+
+body.rtl .sidebar {
+    right: 0;
+    left: auto;
+    border-right: none;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.rtl .main-content {
+    margin-left: 0;
+    margin-right: var(--sidebar-width);
+}
+
+body.rtl .sidebar-menu a.active {
+    border-left: none;
+    border-right: 4px solid white;
+}
+
+body.rtl .sidebar-menu a:hover {
+    padding-left: 20px;
+    padding-right: 25px;
+}
+
+body.rtl .navbar-right {
+    flex-direction: row-reverse;
+}
+
+body.rtl .search-box button {
+    border-left: none;
+    border-right: 1px solid #ddd;
+}
+
+body.rtl .actions {
+    flex-direction: row-reverse;
+}
+
+body.rtl .modal-close {
+    order: 2;
+}
+
+body.rtl .modal-footer {
+    flex-direction: row-reverse;
+}
+
+/* Ajustements pour l'arabe */
+.arabic-font {
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+}
+
+body.rtl .detail-value {
+    text-align: left;
+}
+
+/* Support des dates RTL */
+.rtl-date {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Styles pour l'internationalisation */
+
+/* Direction RTL */
+body.rtl {
+    direction: rtl;
+    text-align: right;
+}
+
+body.rtl .sidebar {
+    right: 0;
+    left: auto;
+    border-right: none;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.rtl .main-content {
+    margin-left: 0;
+    margin-right: var(--sidebar-width);
+}
+
+body.rtl .sidebar-menu a.active {
+    border-left: none;
+    border-right: 4px solid white;
+}
+
+body.rtl .sidebar-menu a:hover {
+    padding-left: 20px;
+    padding-right: 25px;
+}
+
+body.rtl .navbar-right {
+    flex-direction: row-reverse;
+}
+
+body.rtl .search-box button {
+    border-left: none;
+    border-right: 1px solid #ddd;
+}
+
+body.rtl .actions {
+    flex-direction: row-reverse;
+}
+
+body.rtl .modal-close {
+    order: 2;
+}
+
+body.rtl .modal-footer {
+    flex-direction: row-reverse;
+}
+
+/* Ajustements pour l'arabe */
+.arabic-font {
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+}
+
+body.rtl .detail-value {
+    text-align: left;
+}
+
+/* Support des dates RTL */
+.rtl-date {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Ajustements responsives pour RTL */
+@media (max-width: 768px) {
+    body.rtl .sidebar {
+        transform: translateX(100%);
+    }
+
+    body.rtl .sidebar.active {
+        transform: translateX(0);
+    }
+
+    body.rtl .main-content {
+        margin-right: 0;
+    }
+}
+
+/* Global Loading Overlay */
+.global-loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.3s ease;
+}
+
+.loading-content {
+    text-align: center;
+    color: white;
+}
+
+.loading-spinner-large {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+.loading-content p {
+    font-size: 18px;
+    margin-top: 15px;
+    font-weight: 300;
+}
+
+/* Loading indicator for forms */
+.loading-indicator {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    flex-direction: column;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Smooth transitions for page changes */
+body {
+    opacity: 0;
+    animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Hide content until authenticated */
+.authenticated-only {
+    display: none;
+}
+
+body.authenticated .authenticated-only {
+    display: block;
+}
+
+/* Notifications */
+.notifications-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 350px;
+}
+
+.notification {
+    background: white;
+    border-radius: 8px;
+    padding: 15px 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transform: translateX(100%);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    border-left: 4px solid;
+}
+
+.notification.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.notification-success {
+    border-left-color: #4CAF50;
+    background: #f1f8e9;
+}
+
+.notification-error {
+    border-left-color: #F44336;
+    background: #ffebee;
+}
+
+.notification-warning {
+    border-left-color: #FF9800;
+    background: #fff3e0;
+}
+
+.notification-info {
+    border-left-color: #2196F3;
+    background: #e3f2fd;
+}
+
+.notification-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+}
+
+.notification-content i {
+    font-size: 20px;
+}
+
+.notification-success .notification-content i {
+    color: #4CAF50;
+}
+
+.notification-error .notification-content i {
+    color: #F44336;
+}
+
+.notification-warning .notification-content i {
+    color: #FF9800;
+}
+
+.notification-info .notification-content i {
+    color: #2196F3;
+}
+
+.notification-close {
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 10px;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+.notification-close:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+/* Logo dans la sidebar - AGGRANDI */
+.sidebar-logo {
+    width: 50px;
+    /* Smaller, cleaner size */
+    height: 50px;
+    border-radius: 8px;
+    /* Slightly rounded */
+    margin-bottom: 0;
+    /* No bottom margin needed with flex row */
+    border: none;
+    /* NO BORDER */
+    object-fit: contain;
+    background: transparent;
+    /* Transparent background */
+    padding: 0;
+    /* No padding */
+    box-shadow: none;
+    /* No shadow */
+}
+
+/* Pour ajuster l'en-tête de la sidebar */
+.sidebar-header {
+    padding: 25px 20px;
+    display: flex;
+    flex-direction: row;
+    /* Align horizontal */
+    align-items: center;
+    /* Center vertically */
+    justify-content: flex-start;
+    /* Align left */
+    gap: 15px;
+    /* Space between logo and text */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    min-height: auto;
+    /* Remove fixed massive height */
+}
+
+/* =========================== */
+/* CORRECTIONS RESPONSIVE */
+/* =========================== */
+
+/* Mobile (écrans ≤ 768px) */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: 60px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        transform: translateY(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar.active {
+        transform: translateY(0);
+        height: 100vh;
+    }
+
+    .main-content {
+        margin-left: 0;
+        margin-top: 60px;
+    }
+
+    .top-navbar {
+        height: 60px;
+        padding: 0 15px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 999;
+    }
+
+    .sidebar-toggle {
+        display: block;
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        font-size: 20px;
+    }
+}
+
+/* Tablette (769px à 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .sidebar {
+        width: 200px;
+    }
+
+    .main-content {
+        margin-left: 200px;
+    }
+}
+
+/* Très petits écrans (≤ 480px) */
+@media (max-width: 480px) {
+    .sidebar-toggle {
+        margin-right: 10px;
+    }
+
+    .navbar-left h1 {
+        font-size: 16px;
+        max-width: 120px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

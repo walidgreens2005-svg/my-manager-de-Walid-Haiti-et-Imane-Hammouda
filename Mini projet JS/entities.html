@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MyManager - Gestion des Entités</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/entities.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Sidebar Navigation (identique au dashboard) -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <img src="assets/logo.png" alt="Logo" class="sidebar-logo">
+            <h2>DashFlow</h2>
+        </div>
+
+        <ul class="sidebar-menu">
+            <li>
+                <a href="dashboard.html">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="entities.html?entity=users">
+                    <i class="fas fa-users"></i>
+                    <span>Utilisateurs</span>
+                </a>
+            </li>
+            <li>
+                <a href="entities.html?entity=products">
+                    <i class="fas fa-box"></i>
+                    <span>Produits</span>
+                </a>
+            </li>
+            <li>
+                <a href="entities.html?entity=orders">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Commandes</span>
+                </a>
+            </li>
+            <li>
+                <a href="entities.html?entity=customers">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Clients</span>
+                </a>
+            </li>
+            <li>
+                <a href="entities.html?entity=invoices">
+                    <i class="fas fa-file-invoice"></i>
+                    <span>Factures</span>
+                </a>
+            </li>
+            <li class="sidebar-footer">
+                <a href="#" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Déconnexion</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Navigation Bar -->
+        <header class="top-navbar">
+            <div class="navbar-left">
+                <button class="sidebar-toggle" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 id="pageTitle">Gestion des Entités</h1>
+            </div>
+
+            <div class="navbar-right">
+                <div class="language-selector">
+                    <select id="languageSelect" onchange="changeLanguage(this.value)">
+                        <option value="fr">🇫🇷 Français</option>
+                        <option value="en">🇬🇧 English</option>
+                        <option value="ar">🇸🇦 العربية</option>
+                    </select>
+                </div>
+
+                <div class="user-profile">
+                    <span id="usernameDisplay">Administrateur</span>
+                    <div class="avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Entities Content -->
+        <div class="entities-container">
+            <!-- Entity Header -->
+            <div class="entity-header">
+                <div class="header-left">
+                    <h2 id="entityTitle">Entité</h2>
+                    <p id="entityDescription">Gérez vos données ici</p>
+                </div>
+
+                <div class="header-right">
+                    <button class="btn btn-primary" onclick="openCreateModal()">
+                        <i class="fas fa-plus"></i> Ajouter
+                    </button>
+
+                    <button class="btn btn-secondary" onclick="exportToCSV()">
+                        <i class="fas fa-file-export"></i> Exporter CSV
+                    </button>
+
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="Rechercher...">
+                        <button onclick="searchData()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters-section">
+                <div class="filter-group">
+                    <label>Trier par:</label>
+                    <select id="sortSelect" onchange="sortData()">
+                        <option value="id">ID</option>
+                        <option value="name">Nom</option>
+                        <option value="date">Date</option>
+                        <option value="status">Statut</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label data-i18n="entity.filter">Filtrer par statut:</label>
+                    <select id="statusFilter" onchange="filterData()">
+                        <option value="all" data-i18n="entity.all">Tous</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Éléments par page:</label>
+                    <select id="itemsPerPage" onchange="changeItemsPerPage()">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Data Table -->
+            <div class="table-container">
+                <table id="dataTable">
+                    <thead>
+                        <tr id="tableHeaders">
+                            <!-- Les en-têtes seront générés dynamiquement -->
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Les données seront chargées dynamiquement -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <button onclick="changePage(-1)" class="pagination-btn">
+                    <i class="fas fa-chevron-left"></i> Précédent
+                </button>
+
+                <div class="page-numbers" id="pageNumbers">
+                    <!-- Les numéros de page seront générés dynamiquement -->
+                </div>
+
+                <button onclick="changePage(1)" class="pagination-btn">
+                    Suivant <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <span class="page-info" id="pageInfo">Page 1 sur 1</span>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal pour créer/modifier -->
+    <div id="createModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Ajouter un élément</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="entityForm">
+                    <!-- Le formulaire sera généré dynamiquement -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">Annuler</button>
+                <button class="btn btn-primary" onclick="saveEntity()">Enregistrer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmation de suppression -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirmer la suppression</h3>
+                <button class="modal-close" onclick="closeDeleteModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Êtes-vous sûr de vouloir supprimer cet élément ? Cette action est irréversible.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeDeleteModal()">Annuler</button>
+                <button class="btn btn-danger" onclick="confirmDelete()">Supprimer</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/entities.js"></script>
+    <script src="js/crud.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/export.js"></script>
+</body>
+
+</html>

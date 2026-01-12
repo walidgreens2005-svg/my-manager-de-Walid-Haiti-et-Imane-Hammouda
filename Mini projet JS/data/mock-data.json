@@ -1,0 +1,17 @@
+{
+  "appName": "MyManager Backoffice",
+  "version": "1.0.0",
+  "description": "Données simulées pour l'application MyManager",
+  "entities": {
+    "users": 50,
+    "products": 50,
+    "orders": 50,
+    "customers": 50,
+    "invoices": 50
+  },
+  "settings": {
+    "defaultLanguage": "fr",
+    "theme": "light",
+    "itemsPerPage": 10
+  }
+}

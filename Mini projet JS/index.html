@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title data-i18n="login.title">MyManager - Connexion</title>
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="logo-section">
+                <img src="assets/logo.png" alt="MyManager Logo" class="logo">
+                <h1 data-i18n="login.title">MyManager Backoffice</h1>
+                <p data-i18n="login.subtitle">Connectez-vous pour gérer votre espace</p>
+            </div>
+
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="username" data-i18n="login.username">
+                        <i class="fas fa-user"></i> Nom d'utilisateur
+                    </label>
+                    <input type="text" id="username" name="username" placeholder="admin" required
+                        data-i18n-placeholder="login.username">
+                </div>
+
+                <div class="form-group">
+                    <label for="password" data-i18n="login.password">
+                        <i class="fas fa-lock"></i> Mot de passe
+                    </label>
+                    <input type="password" id="password" name="password" placeholder="••••••••" required
+                        data-i18n-placeholder="login.password">
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-login" data-i18n="login.button">
+                        <i class="fas fa-sign-in-alt"></i> Se connecter
+                    </button>
+                </div>
+
+                <div class="login-footer">
+                    <p data-i18n="login.credentials">Identifiants par défaut : admin / admin</p>
+                </div>
+            </form>
+
+            <div id="errorMessage" class="error-message" style="display: none;" data-i18n="login.error"></div>
+        </div>
+
+        <div class="language-selector">
+            <select id="languageSelect">
+                <option value="fr">🇫🇷 Français</option>
+                <option value="en">🇬🇧 English</option>
+                <option value="ar">🇸🇦 العربية</option>
+            </select>
+        </div>
+    </div>
+
+    <script src="js/i18n.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+
+</html>
